@@ -2,6 +2,8 @@
 #define MAGAZYN_H
 
 #include <gtk/gtk.h>
+#include <glib.h>
+#include <glibconfig.h>
 
 typedef struct Book {
     char *author;

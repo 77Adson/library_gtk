@@ -1,7 +1,7 @@
 #include "magazyn.h"
 #include <stdlib.h>
 #include <string.h>
-#include <gsignal.h>
+// #include <gsignal.h>
 
 static Book *inventory = NULL;
 

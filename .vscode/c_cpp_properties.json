@@ -1,28 +1,22 @@
 {
     "configurations": [
         {
-            "name": "Win32",
+            "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "C:/msys64/ucrt64/include/gtk-4.0/**",
-                "C:/msys64/ucrt64/include/glib-2.0/**",
-                "C:/msys64/ucrt64/include/cairo/**",
-                "C:/msys64/ucrt64/include/pango-1.0/**",
-                "C:/msys64/ucrt64/include/harfbuzz/**",
-                "C:/msys64/ucrt64/include/gdk-pixbuf-2.0/**",
-                "C:/msys64/ucrt64/include/graphene-1.0/**",
-                "C:/msys64/ucrt64/include/glib-2.0/gobject/**",
-                "C:/msys64/ucrt64/include/glib-2.0/gobject"
+                "/usr/include/gtk-3.0",
+                "/usr/include/glib-2.0",
+                "/usr/lib/x86_64-linux-gnu/glib-2.0",
+                "/usr/include/pango-1.0",
+                "/usr/include/harfbuzz",
+                "/usr/include/cairo",
+                "/usr/include/gdk-pixbuf-2.0",
+                "/usr/include/atk-1.0"
             ],
-            "defines": [
-                "_DEBUG",
-                "UNICODE",
-                "_UNICODE"
-            ],
+            "defines": [],
             "cStandard": "c17",
             "cppStandard": "gnu++17",
-            "intelliSenseMode": "windows-gcc-x64",
-            "configurationProvider": "ms-vscode.makefile-tools"
+            "intelliSenseMode": "linux-gcc-x64"
         }
     ],
     "version": 4

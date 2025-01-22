@@ -20,4 +20,8 @@ void add_book(const char *author, const char *title, double price, int quantity)
 void remove_book(const char *title);
 Book* search_book(const char *title);
 
+void add_book_button_clicked(GtkWidget *widget, gpointer data);
+void remove_book_button_clicked(GtkWidget *widget, gpointer data);
+void search_book_button_clicked(GtkWidget *widget, gpointer data);
+
 #endif // MAGAZYN_H

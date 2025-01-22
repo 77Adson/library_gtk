@@ -1,21 +1,62 @@
 #include <gtk/gtk.h>
 #include "magazyn.h"
 
+/**
+ * Callback function for the "Add" button click event.
+ *
+ * This function is triggered when the user clicks the "Add" button.
+ * It opens a window with a form to add a new book to the inventory.
+ *
+ * @param widget The button widget that triggered the event.
+ * @param data Additional data passed to the callback function (unused).
+ */
+
 static void on_add_button_clicked(GtkWidget *widget, gpointer data) {
     // Dodaj książkę do magazynu
     add_book_window();
 }
+
+/**
+ * Callback function for the "Remove" button click event.
+ *
+ * This function is triggered when the user clicks the "Remove" button.
+ * It opens a window with a form to remove a book from the inventory.
+ *
+ * @param widget The button widget that triggered the event.
+ * @param data Additional data passed to the callback function (unused).
+ */
 
 static void on_remove_button_clicked(GtkWidget *widget, gpointer data) {
     // Usuń książkę z magazynu
     remove_book_window();
 }
 
+/**
+ * Callback function for the "Search" button click event.
+ *
+ * This function is triggered when the user clicks the "Search" button.
+ * It opens a window with a form to search for a book in the inventory.
+ *
+ * @param widget The button widget that triggered the event.
+ * @param data Additional data passed to the callback function (unused).
+ */
 static void on_search_button_clicked(GtkWidget *widget, gpointer data) {
     // Wyszukaj książkę w magazynie
     search_book_window();
 }
 
+/**
+ * Główna funkcja programu, uruchamiana po utworzeniu obiektu GtkApplication.
+ *
+ * Funkcja tworzy okno główne programu z trzema guzikami:
+ * "Dodaj Książkę", "Usuń Książkę", "Wyszukaj Książkę". Gdy użytkownik
+ * kliknie jeden z tych guzików, to odpowiednia funkcja obsługi zdarzenia
+ * jest wywoływana.
+ *
+ * @param app obiekt GtkApplication, który uruchomił tę funkcję
+ * @param user_data wskaźnik na dodatkowe dane przekazywane do tej funkcji
+ *                  (nie używany)
+ */
 static void activate(GtkApplication *app, gpointer user_data) {
     GtkWidget *window;
     GtkWidget *grid;
@@ -45,6 +86,19 @@ static void activate(GtkApplication *app, gpointer user_data) {
     gtk_widget_show_all(window);
 }
 
+/**
+ * Główna funkcja programu, uruchamiana automatycznie po uruchomieniu
+ * programu.
+ *
+ * Funkcja tworzy obiekt GtkApplication i  ączy go z funkcją
+ * activate, która jest wywoływana, gdy aplikacja jest uruchamiana.
+ * Funkcja uruchamia pętlę zdarzeń Gliba i zwraca status końcowy
+ * aplikacji.
+ *
+ * @param argc liczba argumentów wiersza poleceń
+ * @param argv tablica argumentów wiersza poleceń
+ * @return status końcowy aplikacji
+ */
 int main(int argc, char **argv) {
     GtkApplication *app;
     int status;

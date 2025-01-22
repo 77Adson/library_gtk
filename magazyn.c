@@ -4,6 +4,15 @@
 
 static Book *inventory = NULL;
 
+/**
+ * Dodaj książkę do magazynu
+ *
+ * @param author autor książki
+ * @param title tytuł książki
+ * @param price cena książki
+ * @param quantity ilość książek
+ */
+
 void add_book(const char *author, const char *title, double price, int quantity) {
     Book *new_book = malloc(sizeof(Book));
     new_book->author = strdup(author);
@@ -14,6 +23,11 @@ void add_book(const char *author, const char *title, double price, int quantity)
     inventory = new_book;
 }
 
+/**
+ * Usuń książkę z magazynu
+ *
+ * @param title tytuł książki do usunięcia
+ */
 void remove_book(const char *title) {
     Book *current = inventory;
     Book *prev = NULL;
@@ -35,6 +49,12 @@ void remove_book(const char *title) {
     }
 }
 
+/**
+ * Wyszukaj książkę w magazynie
+ *
+ * @param title tytuł książki do wyszukania
+ * @return wskaźnik na znalezioną książkę, NULL jeśli książka nie została znaleziona
+ */
 Book* search_book(const char *title) {
     Book *current = inventory;
     while (current != NULL) {
@@ -46,6 +66,14 @@ Book* search_book(const char *title) {
     return NULL;
 }
 
+/**
+ * Tworzy okno z formularzem dodawania książki do magazynu
+ *
+ * Funkcja tworzy okno z formularzem, na którym użytkownik może wprowadzić
+ * dane nowej książki. Po zatwierdzeniu formularza, dane te są
+ * przekazywane do funkcji add_book, która dodaje nową książkę do
+ * magazynu.
+ */
 void add_book_window() {
     GtkWidget *dialog;
     GtkWidget *content_area;
@@ -84,6 +112,14 @@ void add_book_window() {
     gtk_widget_show_all(dialog);
 }
 
+/**
+ * Tworzy okno z formularzem usuwania książki z magazynu
+ *
+ * Funkcja tworzy okno z formularzem, na którym użytkownik może wprowadzić
+ * tytuł książki do usunięcia. Po zatwierdzeniu formularza, tytuł ten jest
+ * przekazywany do funkcji remove_book, która usuwa książkę o tym tytule
+ * z magazynu.
+ */
 void remove_book_window() {
     GtkWidget *dialog;
     GtkWidget *content_area;
@@ -109,6 +145,15 @@ void remove_book_window() {
 
     gtk_widget_show_all(dialog);
 }
+
+/**
+ * Tworzy okno z formularzem wyszukiwania książki w magazynie
+ *
+ * Funkcja tworzy okno dialogowe z formularzem, w którym użytkownik może wprowadzić
+ * tytuł książki do wyszukania. Po zatwierdzeniu formularza, tytuł ten jest
+ * przekazywany do funkcji search_book_button_clicked, która wyszukuje książkę
+ * o podanym tytule w magazynie.
+ */
 
 void search_book_window() {
     GtkWidget *dialog;
@@ -136,6 +181,17 @@ void search_book_window() {
     gtk_widget_show_all(dialog);
 }
 
+/**
+ * Funkcja obsługi guzika "Dodaj" w oknie dodawania książki do magazynu
+ *
+ * Funkcja jest wywoływana, gdy użytkownik kliknie guzik "Dodaj" w oknie
+ * dodawania książki do magazynu. Funkcja odczytuje dane z formularza,
+ * sprawdza, czy dane są poprawne, a następnie dodaje książkę do magazynu
+ * za pomocą funkcji add_book. Po dodaniu książki, okno jest zamykane.
+ *
+ * @param widget guzik, który wywołał tę funkcję
+ * @param data wskaźnik na okno dialogowe, z którego wywołano tę funkcję
+ */
 void add_book_button_clicked(GtkWidget *widget, gpointer data) {
     GtkWidget *dialog = GTK_WIDGET(data);
     GtkWidget *grid = gtk_bin_get_child(GTK_BIN(gtk_dialog_get_content_area(GTK_DIALOG(dialog))));
@@ -155,6 +211,17 @@ void add_book_button_clicked(GtkWidget *widget, gpointer data) {
     gtk_widget_destroy(dialog);
 }
 
+/**
+ * Funkcja obsługi guzika "Usuń" w oknie usuwania książki z magazynu
+ *
+ * Funkcja jest wywoływana, gdy użytkownik kliknie guzik "Usuń" w oknie
+ * usuwania książki z magazynu. Funkcja odczytuje tytuł książki z
+ * formularza i usuwa książkę o tym tytule z magazynu za pomocą
+ * funkcji remove_book. Po usunięciu książki, okno jest zamykane.
+ *
+ * @param widget guzik, który wywołał tę funkcję
+ * @param data wskaźnik na okno dialogowe, z którego wywołano tę funkcję
+ */
 void remove_book_button_clicked(GtkWidget *widget, gpointer data) {
     GtkWidget *title_entry = GTK_WIDGET(data);
     const char *title = gtk_entry_get_text(GTK_ENTRY(title_entry));
@@ -164,6 +231,19 @@ void remove_book_button_clicked(GtkWidget *widget, gpointer data) {
     }
 }
 
+/**
+ * Funkcja obsługi guzika "Wyszukaj" w oknie wyszukiwania książki w magazynie
+ *
+ * Funkcja jest wywoływana, gdy użytkownik kliknie guzik "Wyszukaj" w oknie
+ * wyszukiwania książki w magazynie. Funkcja odczytuje tytuł książki z
+ * formularza i wyszukuje książkę o tym tytule w magazynie za pomocą
+ * funkcji search_book. Jeśli książka jest znaleziona, jej dane są
+ * wyświetlane w konsoli, a jeśli nie, to wyświetlany jest komunikat
+ * o braku książki o danym tytule.
+ *
+ * @param widget guzik, który wywołał tę funkcję
+ * @param data wskaźnik na okno dialogowe, z którego wywołano tę funkcję
+ */
 void search_book_button_clicked(GtkWidget *widget, gpointer data) {
     GtkWidget *title_entry = GTK_WIDGET(data);
     const char *title = gtk_entry_get_text(GTK_ENTRY(title_entry));

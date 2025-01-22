@@ -1,0 +1,10 @@
+Wladca Pierscieni;J.R.R. Tolkien;39.99;5
+Harry Potter i Kamien Filozoficzny;J.K. Rowling;29.99;8
+Zbrodnia i kara;Fiodor Dostojewski;24.99;3
+1984;George Orwell;19.99;10
+Mistrz i Malgorzata;Michail Bulgakov;34.99;6
+Przeminelo z wiatrem;Margaret Mitchell;49.99;2
+Sto lat samotnosci;Gabriel Garcia Marquez;27.99;7
+Krol;Slawomir Kordowski;22.99;4
+Pan Tadeusz;Adam Mickiewicz;15.99;12
+Rok 1984;George Orwell;18.99;9

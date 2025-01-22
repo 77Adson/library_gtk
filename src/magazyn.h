@@ -23,5 +23,6 @@ Book* search_book(const char *title);
 void add_book_button_clicked(GtkWidget *widget, gpointer data);
 void remove_book_button_clicked(GtkWidget *widget, gpointer data);
 void search_book_button_clicked(GtkWidget *widget, gpointer data);
+void load_inventory_from_file(const char *filename);
 
 #endif // MAGAZYN_H

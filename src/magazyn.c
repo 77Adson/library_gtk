@@ -4,14 +4,48 @@
 
 static Book *inventory = NULL;
 
-/**
- * Dodaj książkę do magazynu
- *
- * @param author autor książki
- * @param title tytuł książki
- * @param price cena książki
- * @param quantity ilość książek
- */
+void load_inventory_from_file(const char *filename) {
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        g_print("Error opening file: %s\n", filename);
+        return;
+    }
+
+    char line[1024];
+    while (fgets(line, sizeof(line), file)) {
+        char *tytul = line;
+        char *autor = NULL;
+        char *cena = NULL;
+        char *ilosc = NULL;
+
+        // Split the line into tytul, autor, cena, and ilosc
+        autor = strchr(tytul, ';');
+        if (autor != NULL) {
+            *autor = '\0';
+            autor++;
+            cena = strchr(autor, ';');
+            if (cena != NULL) {
+                *cena = '\0';
+                cena++;
+                ilosc = strchr(cena, ';');
+                if (ilosc != NULL) {
+                    *ilosc = '\0';
+                    ilosc++;
+                }
+            }
+        }
+
+        // Add the book to the inventory
+        if (tytul != NULL && autor != NULL && cena != NULL && ilosc != NULL) {
+            double price = atof(cena);
+            int quantity = atoi(ilosc);
+            add_book(autor, tytul, price, quantity);
+        }
+    }
+
+    fclose(file);
+}
+
 
 void add_book(const char *author, const char *title, double price, int quantity) {
     Book *new_book = malloc(sizeof(Book));
@@ -23,11 +57,6 @@ void add_book(const char *author, const char *title, double price, int quantity)
     inventory = new_book;
 }
 
-/**
- * Usuń książkę z magazynu
- *
- * @param title tytuł książki do usunięcia
- */
 void remove_book(const char *title) {
     Book *current = inventory;
     Book *prev = NULL;
@@ -49,12 +78,7 @@ void remove_book(const char *title) {
     }
 }
 
-/**
- * Wyszukaj książkę w magazynie
- *
- * @param title tytuł książki do wyszukania
- * @return wskaźnik na znalezioną książkę, NULL jeśli książka nie została znaleziona
- */
+
 Book* search_book(const char *title) {
     Book *current = inventory;
     while (current != NULL) {
@@ -66,14 +90,6 @@ Book* search_book(const char *title) {
     return NULL;
 }
 
-/**
- * Tworzy okno z formularzem dodawania książki do magazynu
- *
- * Funkcja tworzy okno z formularzem, na którym użytkownik może wprowadzić
- * dane nowej książki. Po zatwierdzeniu formularza, dane te są
- * przekazywane do funkcji add_book, która dodaje nową książkę do
- * magazynu.
- */
 void add_book_window() {
     GtkWidget *dialog;
     GtkWidget *content_area;
@@ -112,14 +128,7 @@ void add_book_window() {
     gtk_widget_show_all(dialog);
 }
 
-/**
- * Tworzy okno z formularzem usuwania książki z magazynu
- *
- * Funkcja tworzy okno z formularzem, na którym użytkownik może wprowadzić
- * tytuł książki do usunięcia. Po zatwierdzeniu formularza, tytuł ten jest
- * przekazywany do funkcji remove_book, która usuwa książkę o tym tytule
- * z magazynu.
- */
+
 void remove_book_window() {
     GtkWidget *dialog;
     GtkWidget *content_area;
@@ -146,15 +155,6 @@ void remove_book_window() {
     gtk_widget_show_all(dialog);
 }
 
-/**
- * Tworzy okno z formularzem wyszukiwania książki w magazynie
- *
- * Funkcja tworzy okno dialogowe z formularzem, w którym użytkownik może wprowadzić
- * tytuł książki do wyszukania. Po zatwierdzeniu formularza, tytuł ten jest
- * przekazywany do funkcji search_book_button_clicked, która wyszukuje książkę
- * o podanym tytule w magazynie.
- */
-
 void search_book_window() {
     GtkWidget *dialog;
     GtkWidget *content_area;
@@ -168,30 +168,37 @@ void search_book_window() {
     grid = gtk_grid_new();
     gtk_container_add(GTK_CONTAINER(content_area), grid);
 
-    gtk_grid_attach(GTK_GRID(grid), gtk_label_new("Tytuł do wyszukania:"), 0, 0, 1, 1);
-    title_entry = gtk_entry_new();
-    gtk_grid_attach(GTK_GRID(grid), title_entry, 1, 0, 1, 1);
+    // Title of the window
+    gtk_grid_attach(GTK_GRID(grid), gtk_label_new("Wszystkie książki w magazynie:"), 0, 0, 4, 1);
 
-    search_button = gtk_button_new_with_label("Wyszukaj");
-    g_signal_connect(search_button, "clicked", G_CALLBACK(search_book_button_clicked), title_entry);
-    gtk_grid_attach(GTK_GRID(grid), search_button, 0, 1, 2, 1);
+    // Column headers for the table
+    gtk_grid_attach(GTK_GRID(grid), gtk_label_new("Tytuł"), 0, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), gtk_label_new("Autor"), 1, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), gtk_label_new("Cena"), 2, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), gtk_label_new("Ilość"), 3, 1, 1, 1);
+
+    Book *current = inventory;
+    int row = 2; // Start from the second row as the first is reserved for headers
+    while (current != NULL) {
+        // Title
+        gtk_grid_attach(GTK_GRID(grid), gtk_label_new(current->title), 0, row, 1, 1);
+        // Author
+        gtk_grid_attach(GTK_GRID(grid), gtk_label_new(current->author), 1, row, 1, 1);
+        // Price
+        gtk_grid_attach(GTK_GRID(grid), gtk_label_new(g_strdup_printf("%.2f", current->price)), 2, row, 1, 1);
+        // Quantity
+        gtk_grid_attach(GTK_GRID(grid), gtk_label_new(g_strdup_printf("%d", current->quantity)), 3, row, 1, 1);
+
+        row++; // Move to the next row
+        current = current->next;
+    }
 
     g_signal_connect(dialog, "response", G_CALLBACK(gtk_widget_destroy), dialog);
 
     gtk_widget_show_all(dialog);
 }
 
-/**
- * Funkcja obsługi guzika "Dodaj" w oknie dodawania książki do magazynu
- *
- * Funkcja jest wywoływana, gdy użytkownik kliknie guzik "Dodaj" w oknie
- * dodawania książki do magazynu. Funkcja odczytuje dane z formularza,
- * sprawdza, czy dane są poprawne, a następnie dodaje książkę do magazynu
- * za pomocą funkcji add_book. Po dodaniu książki, okno jest zamykane.
- *
- * @param widget guzik, który wywołał tę funkcję
- * @param data wskaźnik na okno dialogowe, z którego wywołano tę funkcję
- */
+
 void add_book_button_clicked(GtkWidget *widget, gpointer data) {
     GtkWidget *dialog = GTK_WIDGET(data);
     GtkWidget *grid = gtk_bin_get_child(GTK_BIN(gtk_dialog_get_content_area(GTK_DIALOG(dialog))));
@@ -211,17 +218,6 @@ void add_book_button_clicked(GtkWidget *widget, gpointer data) {
     gtk_widget_destroy(dialog);
 }
 
-/**
- * Funkcja obsługi guzika "Usuń" w oknie usuwania książki z magazynu
- *
- * Funkcja jest wywoływana, gdy użytkownik kliknie guzik "Usuń" w oknie
- * usuwania książki z magazynu. Funkcja odczytuje tytuł książki z
- * formularza i usuwa książkę o tym tytule z magazynu za pomocą
- * funkcji remove_book. Po usunięciu książki, okno jest zamykane.
- *
- * @param widget guzik, który wywołał tę funkcję
- * @param data wskaźnik na okno dialogowe, z którego wywołano tę funkcję
- */
 void remove_book_button_clicked(GtkWidget *widget, gpointer data) {
     GtkWidget *title_entry = GTK_WIDGET(data);
     const char *title = gtk_entry_get_text(GTK_ENTRY(title_entry));
@@ -231,19 +227,7 @@ void remove_book_button_clicked(GtkWidget *widget, gpointer data) {
     }
 }
 
-/**
- * Funkcja obsługi guzika "Wyszukaj" w oknie wyszukiwania książki w magazynie
- *
- * Funkcja jest wywoływana, gdy użytkownik kliknie guzik "Wyszukaj" w oknie
- * wyszukiwania książki w magazynie. Funkcja odczytuje tytuł książki z
- * formularza i wyszukuje książkę o tym tytule w magazynie za pomocą
- * funkcji search_book. Jeśli książka jest znaleziona, jej dane są
- * wyświetlane w konsoli, a jeśli nie, to wyświetlany jest komunikat
- * o braku książki o danym tytule.
- *
- * @param widget guzik, który wywołał tę funkcję
- * @param data wskaźnik na okno dialogowe, z którego wywołano tę funkcję
- */
+
 void search_book_button_clicked(GtkWidget *widget, gpointer data) {
     GtkWidget *title_entry = GTK_WIDGET(data);
     const char *title = gtk_entry_get_text(GTK_ENTRY(title_entry));

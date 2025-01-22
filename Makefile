@@ -1,8 +1,8 @@
-CC = gcc
-CFLAGS = -Wall -g `pkg-config --cflags gtk+-3.0`
-LDFLAGS = `pkg-config --libs gtk+-3.0`
+CC=gcc
+CFLAGS=`pkg-config --cflags gtk+-3.0`
+LDFLAGS=`pkg-config --libs gtk+-3.0`
 
-SRC = main.c magazyn.c
+SRC = src/main.c src/magazyn.c
 OBJ = $(SRC:.c=.o)
 TARGET = magazyn
 
@@ -13,7 +13,7 @@ all: $(TARGET)
 $(TARGET): $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-%.o: %.c
+%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:

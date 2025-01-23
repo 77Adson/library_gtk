@@ -49,6 +49,7 @@ void add_book(const char *author, const char *title, double price, int quantity)
     new_book->quantity = quantity;
     new_book->next = inventory;
     inventory = new_book;
+    printf("Added book: %s\n", title);
 }
 
 void remove_book(const char *title) {

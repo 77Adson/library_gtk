@@ -3,8 +3,15 @@
 
 #include <gtk/gtk.h>
 
-void magazin_window(GtkWidget *widget, gpointer data);
-void add_book_window(GtkWidget *widget, gpointer data);
+GtkWidget* create_magazyn_page(GtkStack *stack);
+
+
 void show_main_menu();
+void create_main_window(GtkApplication *app);
+void switch_to_magazyn(GtkWidget *widget, gpointer data);
+void switch_to_main(GtkWidget *widget, gpointer data);
+void add_book_window();
+void on_add_button_clicked(GtkWidget *widget, gpointer data);
+
 
 #endif // GUI_H

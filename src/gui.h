@@ -3,6 +3,8 @@
 
 #include <gtk/gtk.h>
 
-void search_window(GtkWidget *widget, gpointer data);
+void magazin_window(GtkWidget *widget, gpointer data);
+void add_book_window(GtkWidget *widget, gpointer data);
+void show_main_menu();
 
 #endif // GUI_H

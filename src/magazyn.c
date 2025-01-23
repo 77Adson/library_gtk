@@ -52,6 +52,48 @@ void add_book(const char *author, const char *title, double price, int quantity)
     printf("Added book: %s\n", title);
 }
 
+Book* search(const char *option, const char *query) {
+    if (query == NULL || strlen(query) == 0) {
+        return get_inventory();  // Return the full inventory if the query is empty or NULL
+    }
+
+    Book *found_inventory = malloc(sizeof(Book));
+    Book *current = get_inventory();
+    printf("Starting loop\n");
+    if (strcmp(option, "Tytul") == 0){
+        printf("Searching by title\n");
+        while (current) {
+            printf("Book: %s\n", current->title);
+            if (strcmp(current->title, query) == 0){
+                printf("FOund title\n");
+                Book *found_book = malloc(sizeof(Book));
+                *found_book = *current;
+                found_book->next = found_inventory;
+                found_inventory = found_book;
+            }
+            current = current->next;
+        }
+    } else {
+        printf("Searching by author\n");
+        while (current) {
+            printf("Book: %s\n", current->author);
+            if (strcmp(current->author, query) == 0){
+                printf("Found author\n");
+                Book *found_book = malloc(sizeof(Book));
+                *found_book = *current;
+                found_book->next = found_inventory;
+                found_inventory = found_book;
+            }
+            current = current->next;
+        }
+    }
+    while (found_inventory) {
+        printf("saved: %s\n", found_inventory->title);
+        found_inventory = found_inventory->next;
+    }
+    return found_inventory;
+}
+
 void remove_book(const char *title) {
     Book **current = &inventory;
     while (*current) {

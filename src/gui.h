@@ -12,6 +12,7 @@ void switch_to_magazyn(GtkWidget *widget, gpointer data);
 void switch_to_main(GtkWidget *widget, gpointer data);
 void add_book_window();
 void on_add_button_clicked(GtkWidget *widget, gpointer data);
+void on_search_button_clicked(GtkWidget *button, gpointer user_data);
 
 
 #endif // GUI_H

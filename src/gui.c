@@ -1,6 +1,12 @@
 #include "gui.h"
 #include "magazyn.h"
 
+typedef struct {
+    GtkWidget *dropdown_menu;
+    GtkWidget *search_bar;
+} SearchWidgets;
+
+
 void switch_to_magazyn(GtkWidget *widget, gpointer data) {
     GtkStack *stack = GTK_STACK(data);
     gtk_stack_set_visible_child_name(stack, "magazyn_page");
@@ -16,7 +22,7 @@ void create_main_window(GtkApplication *app) {
     GtkWidget *main_window, *stack, *main_grid, *search_button;
 
     main_window = gtk_application_window_new(app);
-    gtk_window_set_title(GTK_WINDOW(main_window), "Księgarnia");
+    gtk_window_set_title(GTK_WINDOW(main_window), "Ksiegarnia");
     gtk_window_set_default_size(GTK_WINDOW(main_window), 800, 600);
 
     // Create stack container
@@ -73,8 +79,9 @@ GtkWidget* create_magazyn_page(GtkStack *stack) {
 
     /// Search container ///
     GtkWidget *dropdown_menu = gtk_combo_box_text_new();
-    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(dropdown_menu), "Tytuł");
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(dropdown_menu), "Tytul");
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(dropdown_menu), "Autor");
+    gtk_combo_box_set_active(GTK_COMBO_BOX(dropdown_menu), 0);
     GtkWidget *search_bar = gtk_entry_new();
     GtkWidget *search_button = gtk_button_new_with_label("Szukaj");
 
@@ -87,6 +94,11 @@ GtkWidget* create_magazyn_page(GtkStack *stack) {
     gtk_box_pack_start(GTK_BOX(search_container), search_bar, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(search_container), search_button, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(content_area), search_container, FALSE, FALSE, 0);
+
+    SearchWidgets *search_widgets = malloc(sizeof(SearchWidgets));
+    search_widgets->dropdown_menu = dropdown_menu;
+    search_widgets->search_bar = search_bar;
+    /// Search container end ///
 
     // Scrolled window for book list
     scrolled_window = gtk_scrolled_window_new(NULL, NULL);
@@ -135,8 +147,27 @@ GtkWidget* create_magazyn_page(GtkStack *stack) {
     // Connect signals
     g_signal_connect(back_button, "clicked", G_CALLBACK(switch_to_main), stack);
     g_signal_connect(add_button, "clicked", G_CALLBACK(add_book_window), NULL);
+    g_signal_connect(search_button, "clicked", G_CALLBACK(on_search_button_clicked), search_widgets);
 
     return content_area;
+}
+
+void on_search_button_clicked(GtkWidget *button, gpointer user_data) {
+    SearchWidgets *widgets = (SearchWidgets *)user_data;
+
+    // Get selected option from dropdown menu
+    const char *selected_option = gtk_combo_box_text_get_active_text(GTK_COMBO_BOX_TEXT(widgets->dropdown_menu));
+
+    // Get entered text from search bar
+    const char *search_text = gtk_entry_get_text(GTK_ENTRY(widgets->search_bar));
+    
+    // Call search function
+    printf("calling search\n");
+    search(selected_option, search_text);
+    printf("exited search\n");
+
+    // Free the selected option string returned by GTK
+    g_free((char *)selected_option);
 }
 
 void add_book_window() {

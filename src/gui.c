@@ -18,6 +18,7 @@ static GtkWidget *get_treeview_widget(GtkWidget *new_treeview) {
 void switch_to_magazyn(GtkWidget *widget, gpointer data) {
     GtkStack *stack = GTK_STACK(data);
     gtk_stack_set_visible_child_name(stack, "magazyn_page");
+    refresh_inventory(get_inventory());
 }
 
 void switch_to_main(GtkWidget *widget, gpointer data) {
@@ -26,7 +27,7 @@ void switch_to_main(GtkWidget *widget, gpointer data) {
 }
 
 void create_main_window(GtkApplication *app) {
-    GtkWidget *main_window, *stack, *main_grid, *search_button;
+    GtkWidget *main_window, *stack, *main_grid, *to_magazine_button, *load_button;
 
     main_window = gtk_application_window_new(app);
     gtk_window_set_title(GTK_WINDOW(main_window), "Ksiegarnia");
@@ -40,12 +41,16 @@ void create_main_window(GtkApplication *app) {
     main_grid = gtk_grid_new();
     gtk_stack_add_named(GTK_STACK(stack), main_grid, "main_page");
 
-    // Search button (to switch to magazyn page)
-    search_button = gtk_button_new_with_label("Magazyn");
-    gtk_grid_attach(GTK_GRID(main_grid), search_button, 0, 0, 1, 1);
+    // Buttons
+    to_magazine_button = gtk_button_new_with_label("Magazyn");
+    gtk_grid_attach(GTK_GRID(main_grid), to_magazine_button, 0, 0, 1, 1);
 
-    // Connect button to switch pages
-    g_signal_connect(search_button, "clicked", G_CALLBACK(switch_to_magazyn), stack);
+    load_button = gtk_button_new_with_label("Wczytaj");
+    gtk_grid_attach(GTK_GRID(main_grid), load_button, 1, 0, 1, 1);
+
+    // Connect buttons
+    g_signal_connect(to_magazine_button, "clicked", G_CALLBACK(switch_to_magazyn), stack);
+    g_signal_connect(load_button, "clicked", G_CALLBACK(load_inventory_from_file), NULL);
 
     // Add inventory page to stack (it will be hidden initially)
     GtkWidget *magazyn_page = create_magazyn_page(GTK_STACK(stack));
@@ -165,6 +170,7 @@ GtkWidget* create_magazyn_page(GtkStack *stack) {
     // Connect signals
     g_signal_connect(back_button, "clicked", G_CALLBACK(switch_to_main), stack);
     g_signal_connect(add_button, "clicked", G_CALLBACK(add_book_window), NULL);
+    g_signal_connect(remove_button, "clicked", G_CALLBACK(on_remove_button_clicked), NULL);
     g_signal_connect(search_button, "clicked", G_CALLBACK(on_search_button_clicked), search_widgets);
 
     return content_area;
@@ -235,4 +241,27 @@ void on_add_button_clicked(GtkWidget *widget, gpointer data) {
 
     // Refresh inventory after adding a book
     refresh_inventory(get_inventory());
+}
+
+// Function to handle book removal
+void on_remove_button_clicked(GtkWidget *widget, gpointer data) {
+    GtkWidget *treeview = get_treeview_widget(NULL);
+    GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
+
+    GtkTreeModel *model;
+    GtkTreeIter iter;
+
+    if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
+        gchar *title;
+        gtk_tree_model_get(model, &iter, 0, &title, -1); // Column 0 holds the book title
+
+        // Remove the book from inventory
+        remove_book(title);
+        g_free(title);
+
+        // Refresh inventory after removing the book
+        refresh_inventory(get_inventory());
+    } else {
+        g_print("No book selected for removal.\n");
+    }
 }

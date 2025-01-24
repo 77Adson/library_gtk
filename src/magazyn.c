@@ -5,10 +5,13 @@
 
 static Book *inventory = NULL;
 
-void load_inventory_from_file(const char *filename) {
-    FILE *file = fopen(filename, "r");
+void load_inventory_from_file() {
+    // Free the current inventory before loading a new one
+    free_inventory();
+
+    FILE *file = fopen("src/savefile.txt", "r");
     if (file == NULL) {
-        printf("Error opening file: %s\n", filename);
+        printf("Error opening savefile\n");
         return;
     }
 
@@ -32,6 +35,22 @@ void load_inventory_from_file(const char *filename) {
         if (tytul && autor && cena && ilosc) {
             add_book(autor, tytul, atof(cena), atoi(ilosc));
         }
+    }
+
+    fclose(file);
+}
+
+void save_inventory_to_file(const char *filename) {
+    FILE *file = fopen(filename, "w");
+    if (file == NULL) {
+        printf("Error opening file: %s\n", filename);
+        return;
+    }
+
+    Book *current = inventory;
+    while (current) {
+        fprintf(file, "%s;%s;%f;%d\n", current->author, current->title, current->price, current->quantity);
+        current = current->next;
     }
 
     fclose(file);
@@ -106,15 +125,6 @@ void remove_book(const char *title) {
     }
 }
 
-Book* search_book(const char *title) {
-    for (Book *current = inventory; current; current = current->next) {
-        if (strcmp(current->title, title) == 0) {
-            return current;
-        }
-    }
-    return NULL;
-}
-
 void free_inventory() {
     Book *current = inventory;
     while (current) {
@@ -124,4 +134,5 @@ void free_inventory() {
         free(current);
         current = next;
     }
+    inventory = NULL;
 }

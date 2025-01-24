@@ -18,12 +18,17 @@ static GtkWidget *get_treeview_widget(GtkWidget *new_treeview) {
 void switch_to_magazyn(GtkWidget *widget, gpointer data) {
     GtkStack *stack = GTK_STACK(data);
     gtk_stack_set_visible_child_name(stack, "magazyn_page");
+    /// use widget
+    (void) widget;
+
     refresh_inventory(get_inventory());
 }
 
 void switch_to_main(GtkWidget *widget, gpointer data) {
     GtkStack *stack = GTK_STACK(data);
     gtk_stack_set_visible_child_name(stack, "main_page");
+    /// use widget
+    (void) widget;
 }
 
 void create_main_window(GtkApplication *app) {
@@ -201,6 +206,8 @@ GtkWidget* create_magazyn_page(GtkStack *stack) {
 
 void on_search_button_clicked(GtkWidget *button, gpointer user_data) {
     SearchWidgets *widgets = (SearchWidgets *)user_data;
+    /// use button
+    (void)button;
 
     // Get selected option from dropdown menu and search text
     const char *selected_option = gtk_combo_box_text_get_active_text(GTK_COMBO_BOX_TEXT(widgets->dropdown_menu));
@@ -267,6 +274,10 @@ void add_book_window() {
 }
 
 void on_add_button_clicked(GtkWidget *widget, gpointer data) {
+    // redundant parameters
+    (void)data;
+
+    // Get data from entry widgets
     GtkWidget *entry_author = g_object_get_data(G_OBJECT(widget), "entry_author");
     GtkWidget *entry_title = g_object_get_data(G_OBJECT(widget), "entry_title");
     GtkWidget *entry_price = g_object_get_data(G_OBJECT(widget), "entry_price");
@@ -285,6 +296,10 @@ void on_add_button_clicked(GtkWidget *widget, gpointer data) {
 
 // Function to handle book removal
 void on_remove_button_clicked(GtkWidget *widget, gpointer data) {
+    // redundant parameters
+    (void)widget;
+    (void)data;
+
     GtkWidget *treeview = get_treeview_widget(NULL);
     GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
 

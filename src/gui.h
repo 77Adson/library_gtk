@@ -2,6 +2,7 @@
 #define GUI_H
 
 #include <gtk/gtk.h>
+#include "magazyn.h"
 
 GtkWidget* create_magazyn_page(GtkStack *stack);
 
@@ -13,6 +14,7 @@ void add_book_window();
 void on_add_button_clicked(GtkWidget *widget, gpointer data);
 void on_search_button_clicked(GtkWidget *button, gpointer user_data);
 void on_remove_button_clicked(GtkWidget *widget, gpointer data);
+void refresh_inventory(Book *inventory);
 
 
 #endif // GUI_H

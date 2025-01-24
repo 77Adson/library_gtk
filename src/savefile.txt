@@ -1,5 +1,5 @@
+TEST;ja;1.000000;1
 lolzTytul;jaAutor;21.000000;36
-lolz2;ja;2.000000;2
 lolz;ja;21.000000;36
 Rok 1984;George Orwell;18.990000;9
 Pan Tadeusz;Adam Mickiewicz;15.990000;12

@@ -57,7 +57,7 @@ Book* search(const char *option, const char *query) {
         return get_inventory();  // Return the full inventory if the query is empty or NULL
     }
 
-    Book *found_inventory = malloc(sizeof(Book));
+    Book *found_inventory = NULL;  // Start with an empty list
     Book *current = get_inventory();
     printf("Starting loop\n");
     if (strcmp(option, "Tytul") == 0){

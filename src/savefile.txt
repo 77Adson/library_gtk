@@ -8,4 +8,6 @@ Sto lat samotnosci;Gabriel Garcia Marquez;27.99;7
 Krol;Slawomir Kordowski;22.99;4
 Pan Tadeusz;Adam Mickiewicz;15.99;12
 Rok 1984;George Orwell;18.99;9
-TEST;adison;1;1
+TEST1;adison;1;1
+TEST2;adison;1;1
+TEST3;adison;1;1

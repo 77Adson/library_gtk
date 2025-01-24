@@ -6,6 +6,14 @@ typedef struct {
     GtkWidget *search_bar;
 } SearchWidgets;
 
+// Function to store and retrieve the tree view reference
+static GtkWidget *get_treeview_widget(GtkWidget *new_treeview) {
+    static GtkWidget *treeview = NULL;
+    if (new_treeview != NULL) {
+        treeview = new_treeview;  // Store reference
+    }
+    return treeview;
+}
 
 void switch_to_magazyn(GtkWidget *widget, gpointer data) {
     GtkStack *stack = GTK_STACK(data);
@@ -16,7 +24,6 @@ void switch_to_main(GtkWidget *widget, gpointer data) {
     GtkStack *stack = GTK_STACK(data);
     gtk_stack_set_visible_child_name(stack, "main_page");
 }
-
 
 void create_main_window(GtkApplication *app) {
     GtkWidget *main_window, *stack, *main_grid, *search_button;
@@ -68,6 +75,15 @@ static GtkListStore *create_inventory_model(Book *inventory) {
     return store;
 }
 
+void update_inventory(Book *inventory) {
+    GtkWidget *treeview = get_treeview_widget(NULL);
+    if (treeview == NULL) return;
+
+    GtkListStore *store = create_inventory_model(inventory);
+    gtk_tree_view_set_model(GTK_TREE_VIEW(treeview), GTK_TREE_MODEL(store));
+    g_object_unref(store);  // Free the old model
+}
+
 GtkWidget* create_magazyn_page(GtkStack *stack) {
     GtkWidget *content_area, *treeview, *scrolled_window, *back_button;
     GtkListStore *store;
@@ -108,6 +124,9 @@ GtkWidget* create_magazyn_page(GtkStack *stack) {
     store = create_inventory_model(get_inventory());
     treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
     g_object_unref(store);
+
+    // Store the tree view reference
+    get_treeview_widget(treeview);
 
     // Add columns
     renderer = gtk_cell_renderer_text_new();
@@ -162,11 +181,7 @@ void on_search_button_clicked(GtkWidget *button, gpointer user_data) {
     Book *found_books = search(selected_option, search_text);
 
     // Update inventory model with search results
-    GtkListStore *store = create_inventory_model(found_books);
-    GtkWidget *treeview = gtk_widget_get_parent(GTK_WIDGET(button));
-    GtkTreeModel *model = gtk_tree_view_get_model(GTK_TREE_VIEW(treeview));
-    gtk_tree_view_set_model(GTK_TREE_VIEW(treeview), GTK_TREE_MODEL(store));
-    g_object_unref(model); // Don't forget to unref the old model
+    update_inventory(found_books);
 
     // Free the selected option string returned by GTK
     g_free((char *)selected_option);
@@ -217,4 +232,7 @@ void on_add_button_clicked(GtkWidget *widget, gpointer data) {
     int quantity = atoi(gtk_entry_get_text(GTK_ENTRY(entry_quantity)));
 
     add_book(author, title, price, quantity);
+
+    // Refresh inventory after adding a book
+    update_inventory(get_inventory());
 }

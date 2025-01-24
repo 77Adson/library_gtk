@@ -40,16 +40,16 @@ void load_inventory_from_file() {
     fclose(file);
 }
 
-void save_inventory_to_file(const char *filename) {
-    FILE *file = fopen(filename, "w");
+void save_inventory_to_file() {
+    FILE *file = fopen("src/savefile.txt", "w");
     if (file == NULL) {
-        printf("Error opening file: %s\n", filename);
+        printf("Error opening savefile\n");
         return;
     }
 
     Book *current = inventory;
     while (current) {
-        fprintf(file, "%s;%s;%f;%d\n", current->author, current->title, current->price, current->quantity);
+        fprintf(file, "%s;%s;%f;%d\n", current->title, current->author, current->price, current->quantity);
         current = current->next;
     }
 

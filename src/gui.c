@@ -27,11 +27,12 @@ void switch_to_main(GtkWidget *widget, gpointer data) {
 }
 
 void create_main_window(GtkApplication *app) {
-    GtkWidget *main_window, *stack, *main_grid, *to_magazine_button, *load_button;
+    GtkWidget *main_window, *stack, *main_grid, *to_magazine_button, *load_button, *save_button;
 
     main_window = gtk_application_window_new(app);
     gtk_window_set_title(GTK_WINDOW(main_window), "Ksiegarnia");
     gtk_window_set_default_size(GTK_WINDOW(main_window), 800, 600);
+    gtk_window_set_position(GTK_WINDOW(main_window), GTK_WIN_POS_CENTER);
 
     // Create stack container
     stack = gtk_stack_new();
@@ -39,18 +40,40 @@ void create_main_window(GtkApplication *app) {
 
     // Main grid (Main Menu Page)
     main_grid = gtk_grid_new();
+    gtk_grid_set_column_homogeneous(GTK_GRID(main_grid), TRUE);
+    gtk_grid_set_row_homogeneous(GTK_GRID(main_grid), FALSE);
     gtk_stack_add_named(GTK_STACK(stack), main_grid, "main_page");
 
     // Buttons
     to_magazine_button = gtk_button_new_with_label("Magazyn");
+    gtk_widget_set_size_request(to_magazine_button, 200, 50);
     gtk_grid_attach(GTK_GRID(main_grid), to_magazine_button, 0, 0, 1, 1);
+    gtk_widget_set_halign(to_magazine_button, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(to_magazine_button, GTK_ALIGN_CENTER);
+
+    // Empty row to create space
+    GtkWidget *empty_row = gtk_label_new("");
+    gtk_grid_attach(GTK_GRID(main_grid), empty_row, 0, 1, 1, 1);
 
     load_button = gtk_button_new_with_label("Wczytaj");
-    gtk_grid_attach(GTK_GRID(main_grid), load_button, 1, 0, 1, 1);
+    gtk_widget_set_size_request(load_button, 200, 50);
+    gtk_grid_attach(GTK_GRID(main_grid), load_button, 0, 2, 1, 1);
+    gtk_widget_set_halign(load_button, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(load_button, GTK_ALIGN_CENTER);
+
+    save_button = gtk_button_new_with_label("Zapisz");
+    gtk_widget_set_size_request(save_button, 200, 50);
+    gtk_grid_attach(GTK_GRID(main_grid), save_button, 0, 3, 1, 1);
+    gtk_widget_set_halign(save_button, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(save_button, GTK_ALIGN_CENTER);
+
+    // Center grid vertically
+    gtk_widget_set_valign(main_grid, GTK_ALIGN_CENTER);
 
     // Connect buttons
     g_signal_connect(to_magazine_button, "clicked", G_CALLBACK(switch_to_magazyn), stack);
     g_signal_connect(load_button, "clicked", G_CALLBACK(load_inventory_from_file), NULL);
+    g_signal_connect(save_button, "clicked", G_CALLBACK(save_inventory_to_file), NULL);
 
     // Add inventory page to stack (it will be hidden initially)
     GtkWidget *magazyn_page = create_magazyn_page(GTK_STACK(stack));
@@ -196,24 +219,41 @@ void on_search_button_clicked(GtkWidget *button, gpointer user_data) {
 void add_book_window() {
     GtkWidget *dialog = gtk_dialog_new();
     gtk_window_set_title(GTK_WINDOW(dialog), "Dodawanie ksiazki");
-    gtk_window_set_default_size(GTK_WINDOW(dialog), 400, 200);
+    gtk_window_set_default_size(GTK_WINDOW(dialog), 300, 200);
+    gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
 
     GtkWidget *content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
-    GtkWidget *entry_author = gtk_entry_new();
-    GtkWidget *entry_title = gtk_entry_new();
-    GtkWidget *entry_price = gtk_entry_new();
-    GtkWidget *entry_quantity = gtk_entry_new();
-    GtkWidget *add_button = gtk_button_new_with_label("Dodaj");
+    GtkWidget *grid = gtk_grid_new();
+    gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
+    gtk_container_add(GTK_CONTAINER(content_area), grid);
+    gtk_grid_set_row_spacing(GTK_GRID(grid), 10); // increase row spacing
+    gtk_grid_set_column_spacing(GTK_GRID(grid), 10); // increase column spacing
 
-    gtk_box_pack_start(GTK_BOX(content_area), gtk_label_new("Autor:"), FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(content_area), entry_author, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(content_area), gtk_label_new("Tytul:"), FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(content_area), entry_title, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(content_area), gtk_label_new("Cena:"), FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(content_area), entry_price, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(content_area), gtk_label_new("Ilosc:"), FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(content_area), entry_quantity, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(content_area), add_button, FALSE, FALSE, 0);
+    GtkWidget *label_author = gtk_label_new("Autor:");
+    GtkWidget *entry_author = gtk_entry_new();
+    gtk_grid_attach(GTK_GRID(grid), label_author, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), entry_author, 1, 0, 1, 1);
+
+    GtkWidget *label_title = gtk_label_new("Tytul:");
+    GtkWidget *entry_title = gtk_entry_new();
+    gtk_grid_attach(GTK_GRID(grid), label_title, 0, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), entry_title, 1, 1, 1, 1);
+
+    GtkWidget *label_price = gtk_label_new("Cena:");
+    GtkWidget *entry_price = gtk_entry_new();
+    gtk_grid_attach(GTK_GRID(grid), label_price, 0, 2, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), entry_price, 1, 2, 1, 1);
+
+    GtkWidget *label_quantity = gtk_label_new("Ilosc:");
+    GtkWidget *entry_quantity = gtk_entry_new();
+    gtk_grid_attach(GTK_GRID(grid), label_quantity, 0, 3, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), entry_quantity, 1, 3, 1, 1);
+
+    GtkWidget *add_button = gtk_button_new_with_label("Dodaj");
+    gtk_widget_set_size_request(add_button, 100, 40);
+    gtk_grid_attach(GTK_GRID(grid), add_button, 0, 4, 2, 1);
+    gtk_widget_set_halign(add_button, GTK_ALIGN_CENTER);
 
     // Attach data to the button
     g_object_set_data(G_OBJECT(add_button), "entry_author", entry_author);

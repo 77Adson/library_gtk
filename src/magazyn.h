@@ -14,6 +14,7 @@ typedef struct Book {
 
 // Function prototypes
 void load_inventory_from_file();
+void save_inventory_to_file();
 void add_book(const char *author, const char *title, double price, int quantity);
 void remove_book(const char *title);
 Book* search_book(const char *title);

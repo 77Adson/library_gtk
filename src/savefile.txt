@@ -1,13 +1,13 @@
-Wladca Pierscieni;J.R.R. Tolkien;39.99;5
-Harry Potter i Kamien Filozoficzny;J.K. Rowling;29.99;8
-Zbrodnia i kara;Fiodor Dostojewski;24.99;3
-1984;George Orwell;19.99;10
-Mistrz i Malgorzata;Michail Bulgakov;34.99;6
-Przeminelo z wiatrem;Margaret Mitchell;49.99;2
-Sto lat samotnosci;Gabriel Garcia Marquez;27.99;7
-Krol;Slawomir Kordowski;22.99;4
-Pan Tadeusz;Adam Mickiewicz;15.99;12
-Rok 1984;George Orwell;18.99;9
-TEST1;adison;1;1
-TEST2;adison;1;1
-TEST3;adison;1;1
+lolzTytul;jaAutor;21.000000;36
+lolz2;ja;2.000000;2
+lolz;ja;21.000000;36
+Rok 1984;George Orwell;18.990000;9
+Pan Tadeusz;Adam Mickiewicz;15.990000;12
+Krol;Slawomir Kordowski;22.990000;4
+Sto lat samotnosci;Gabriel Garcia Marquez;27.990000;7
+Przeminelo z wiatrem;Margaret Mitchell;49.990000;2
+Mistrz i Malgorzata;Michail Bulgakov;34.990000;6
+1984;George Orwell;19.990000;10
+Zbrodnia i kara;Fiodor Dostojewski;24.990000;3
+Harry Potter i Kamien Filozoficzny;J.K. Rowling;29.990000;8
+Wladca Pierscieni;J.R.R. Tolkien;39.990000;5

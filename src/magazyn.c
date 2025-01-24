@@ -76,7 +76,7 @@ Book* search(const char *option, const char *query) {
     } else {
         printf("Searching by author\n");
         while (current) {
-            printf("Book: %s\n", current->author);
+            printf("Author: %s\n", current->author);
             if (strcmp(current->author, query) == 0){
                 printf("Found author\n");
                 Book *found_book = malloc(sizeof(Book));
@@ -87,10 +87,7 @@ Book* search(const char *option, const char *query) {
             current = current->next;
         }
     }
-    while (found_inventory) {
-        printf("saved: %s\n", found_inventory->title);
-        found_inventory = found_inventory->next;
-    }
+    printf("Loop finished\n");
     return found_inventory;
 }
 

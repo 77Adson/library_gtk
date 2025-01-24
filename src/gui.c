@@ -47,10 +47,9 @@ void create_main_window(GtkApplication *app) {
     gtk_widget_show_all(main_window);
 }
 
-static GtkListStore *create_inventory_model() {
+static GtkListStore *create_inventory_model(Book *inventory) {
     GtkListStore *store;
     GtkTreeIter iter;
-    Book *inventory = get_inventory();
 
     // Create a list store with four columns: title, author, price, and quantity
     store = gtk_list_store_new(4, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_DOUBLE, G_TYPE_INT);
@@ -106,7 +105,7 @@ GtkWidget* create_magazyn_page(GtkStack *stack) {
     gtk_box_pack_start(GTK_BOX(content_area), scrolled_window, TRUE, TRUE, 0);
 
     // Create tree view with list model
-    store = create_inventory_model();
+    store = create_inventory_model(get_inventory());
     treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
     g_object_unref(store);
 
@@ -155,16 +154,19 @@ GtkWidget* create_magazyn_page(GtkStack *stack) {
 void on_search_button_clicked(GtkWidget *button, gpointer user_data) {
     SearchWidgets *widgets = (SearchWidgets *)user_data;
 
-    // Get selected option from dropdown menu
+    // Get selected option from dropdown menu and search text
     const char *selected_option = gtk_combo_box_text_get_active_text(GTK_COMBO_BOX_TEXT(widgets->dropdown_menu));
-
-    // Get entered text from search bar
     const char *search_text = gtk_entry_get_text(GTK_ENTRY(widgets->search_bar));
     
-    // Call search function
-    printf("calling search\n");
-    search(selected_option, search_text);
-    printf("exited search\n");
+    // Perform search
+    Book *found_books = search(selected_option, search_text);
+
+    // Update inventory model with search results
+    GtkListStore *store = create_inventory_model(found_books);
+    GtkWidget *treeview = gtk_widget_get_parent(GTK_WIDGET(button));
+    GtkTreeModel *model = gtk_tree_view_get_model(GTK_TREE_VIEW(treeview));
+    gtk_tree_view_set_model(GTK_TREE_VIEW(treeview), GTK_TREE_MODEL(store));
+    g_object_unref(model); // Don't forget to unref the old model
 
     // Free the selected option string returned by GTK
     g_free((char *)selected_option);

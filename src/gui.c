@@ -75,7 +75,7 @@ static GtkListStore *create_inventory_model(Book *inventory) {
     return store;
 }
 
-void update_inventory(Book *inventory) {
+void refresh_inventory(Book *inventory) {
     GtkWidget *treeview = get_treeview_widget(NULL);
     if (treeview == NULL) return;
 
@@ -181,7 +181,7 @@ void on_search_button_clicked(GtkWidget *button, gpointer user_data) {
     Book *found_books = search(selected_option, search_text);
 
     // Update inventory model with search results
-    update_inventory(found_books);
+    refresh_inventory(found_books);
 
     // Free the selected option string returned by GTK
     g_free((char *)selected_option);
@@ -234,5 +234,5 @@ void on_add_button_clicked(GtkWidget *widget, gpointer data) {
     add_book(author, title, price, quantity);
 
     // Refresh inventory after adding a book
-    update_inventory(get_inventory());
+    refresh_inventory(get_inventory());
 }

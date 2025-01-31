@@ -1,11 +1,188 @@
 TEST;ja;21.000000;7
+
 Rok 1984;George Orwell;18.990000;9
+
 Pan Tadeusz;Adam Mickiewicz;15.990000;12
+
 Krol;Slawomir Kordowski;22.990000;4
+
 Sto lat samotnosci;Gabriel Garcia Marquez;27.990000;7
+
 Przeminelo z wiatrem;Margaret Mitchell;49.990000;2
+
 Mistrz i Malgorzata;Michail Bulgakov;34.990000;6
+
 1984;George Orwell;19.990000;10
+
 Zbrodnia i kara;Fiodor Dostojewski;24.990000;3
+
 Harry Potter i Kamien Filozoficzny;J.K. Rowling;29.990000;8
+
 Wladca Pierscieni;J.R.R. Tolkien;39.990000;5
+
+Duma i uprzedzenie;Jane Austen;25.990000;7
+
+Cichy Don;Michail Szołochow;30.990000;6
+
+Podroz do wnetrza ziemi;Juliusz Verne;19.990000;9
+
+Ojciec Chrzestny;Mario Puzo;32.990000;5
+
+Hobbit;J.R.R. Tolkien;28.990000;8
+
+Szklany klosz;Sylvia Plath;23.990000;6
+
+Wichrowe Wzgorza;Emily Bronte;26.990000;7
+
+Opowiesc Wigilijna;Charles Dickens;14.990000;10
+
+Dzien Szakala;Frederick Forsyth;31.990000;4
+
+Sherlock Holmes;Arthur Conan Doyle;27.990000;8
+
+Metro 2033;Dmitry Glukhovsky;29.990000;6
+
+Solaris;Stanislaw Lem;22.990000;7
+
+Proces;Franz Kafka;24.990000;6
+
+Bracia Karamazow;Fiodor Dostojewski;33.990000;5
+
+Lalka;Boleslaw Prus;21.990000;9
+
+Gra o Tron;George R.R. Martin;35.990000;4
+
+Zelazna Korona;Catherine Fisher;20.990000;7
+
+Czas Zabijania;John Grisham;28.990000;6
+
+Ania z Zielonego Wzgorza;Lucy Maud Montgomery;16.990000;10
+
+Bastion;Stephen King;39.990000;5
+
+Dziewczyna z pociagu;Paula Hawkins;29.990000;7
+
+Inferno;Dan Brown;27.990000;6
+
+W pustyni i w puszczy;Henryk Sienkiewicz;18.990000;9
+
+To;Stephen King;40.990000;3
+
+Malowany ptak;Jerzy Kosinski;25.990000;8
+
+Dzuma;Albert Camus;22.990000;7
+
+Kod Leonarda da Vinci;Dan Brown;31.990000;6
+
+Ojciec Goriot;Honore de Balzac;20.990000;9
+
+Wyspa Skarbow;Robert Louis Stevenson;19.990000;10
+
+Zielona mila;Stephen King;26.990000;5
+
+Mały Książę;Antoine de Saint-Exupery;14.990000;10
+
+Folwark Zwierzęcy;George Orwell;19.990000;8
+
+Wojna i Pokój;Lew Tolstoj;37.990000;3
+
+Hamlet;William Shakespeare;22.990000;9
+
+Romeo i Julia;William Shakespeare;20.990000;8
+
+Anna Karenina;Lew Tolstoj;30.990000;6
+
+Niezgodna;Veronica Roth;25.990000;7
+
+Rok 451;Ray Bradbury;24.990000;6
+
+Krzyżacy;Henryk Sienkiewicz;21.990000;9
+
+Czerwony smok;Thomas Harris;29.990000;5
+
+Podpalaczka;Stephen King;27.990000;6
+
+Piekny Swiat, Gdzie Jestes;Sally Rooney;23.990000;7
+
+Szeptucha;Katarzyna Berenika Miszczuk;26.990000;8
+
+Ziemia Obiecana;Wladyslaw Reymont;22.990000;9
+
+Zbrodnia w Orient Expressie;Agatha Christie;24.990000;6
+
+Sherlock Holmes: Pies Baskerville’ów;Arthur Conan Doyle;20.990000;9
+
+Medaliony;Zofia Nalkowska;15.990000;10
+
+Nowy Wspanialy Swiat;Aldous Huxley;26.990000;7
+
+Diuna;Frank Herbert;35.990000;4
+
+Czlowiek w wysokim zamku;Philip K. Dick;28.990000;6
+
+Odyseja Kosmiczna 2001;Arthur C. Clarke;30.990000;5
+
+Zaginiona dziewczyna;Gillian Flynn;27.990000;6
+
+Bieguni;Olga Tokarczuk;23.990000;7
+
+Nostalgia Anioła;Alice Sebold;25.990000;8
+
+Opowieści z Narnii;C.S. Lewis;30.990000;6
+
+Bajki robotów;Stanislaw Lem;19.990000;9
+
+Mroczne Materie;Philip Pullman;28.990000;7
+
+Niebo nad Berlinem;Wim Wenders;22.990000;8
+
+Podziemny krag;Chuck Palahniuk;26.990000;5
+
+Zamek;Franz Kafka;25.990000;7
+
+Zimowa opowiesc;Mark Helprin;31.990000;6
+
+Zielone wzgorza Afryki;Ernest Hemingway;20.990000;9
+
+Byl sobie pies;W. Bruce Cameron;19.990000;8
+
+Zapomniany zolnierz;Guy Sajer;27.990000;6
+
+Wiezienie NKWD;Wasilij Grossman;30.990000;5
+
+Dziennik Anny Frank;Anne Frank;22.990000;7
+
+Czerwony namiot;Anita Diamant;26.990000;8
+
+Król Szczurów;James Clavell;23.990000;7
+
+Sniadanie u Tiffany'ego;Truman Capote;24.990000;6
+
+Zabić drozda;Harper Lee;25.990000;8
+
+Lsnienie;Stephen King;27.990000;5
+
+Nawiedzony dom na wzgórzu;Shirley Jackson;23.990000;7
+
+Stowarzyszenie Umarłych Poetów;N.H. Kleinbaum;20.990000;9
+
+Doktor Żywago;Borys Pasternak;29.990000;6
+
+Komornik;Michał Gołkowski;22.990000;8
+
+Rzeźnia numer pięć;Kurt Vonnegut;26.990000;7
+
+Cichy chaos;Sandro Veronesi;23.990000;6
+
+Grobowiec Swiatowida;Zbigniew Nienacki;19.990000;9
+
+Trzej Muszkieterowie;Alexandre Dumas;28.990000;6
+
+Szklana pulapka;Rod Serling;21.990000;9
+
+Tam gdzie spiewaja raki;Delia Owens;25.990000;7
+
+Pachnidło;Patrick Süskind;27.990000;5
+
+Zagubiona dusza;Olga Tokarczuk;21.990000;9
+

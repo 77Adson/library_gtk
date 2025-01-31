@@ -1,4 +1,4 @@
 gcc -Wall -Wextra -g `pkg-config --cflags gtk+-3.0` -c src/main.c -o src/main.o
-gcc -Wall -Wextra -g `pkg-config --cflags gtk+-3.0` -include src/magazyn.h -c src/magazyn.c -o src/magazyn.o
-gcc -Wall -Wextra -g `pkg-config --cflags gtk+-3.0` -include src/magazyn.h -include src/gui.h -c src/gui.c -o src/gui.o
+gcc -Wall -Wextra -g `pkg-config --cflags gtk+-3.0` -c src/magazyn.c -o src/magazyn.o
+gcc -Wall -Wextra -g `pkg-config --cflags gtk+-3.0` -c src/gui.c -o src/gui.o
 gcc src/main.o src/magazyn.o src/gui.o -o magazyn_app `pkg-config --libs gtk+-3.0`

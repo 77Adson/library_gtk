@@ -5,7 +5,7 @@ Projekt **Library GTK** to aplikacja desktopowa stworzona przy użyciu bibliotek
 ## Funkcje
 
 - **Dodawanie książek**: Możliwość dodawania nowych książek do biblioteki.
-~~- **Edytowanie książek**: Możliwość edycji istniejących wpisów książek.~~
+- ~~**Edytowanie książek**: Możliwość edycji istniejących wpisów książek.~~
 - **Usuwanie książek**: Możliwość usuwania książek z biblioteki.
 - **Przeglądanie książek**: Przeglądanie listy wszystkich dostępnych książek.
 - **Wyszukiwanie**: Funkcja wyszukiwania książek po tytule, autorze lub kategorii.
@@ -43,9 +43,13 @@ Aby uruchomić projekt, potrzebujesz następujących narzędzi i bibliotek:
 
 Po uruchomieniu aplikacji, zostaniesz powitany przez główne okno aplikacji, gdzie możesz:
 
+- **Wczytać zawartość savefile.txt:** Kliknij przycisk "Wczytaj"
+
+- **Zapisać dane książek do savefile.txt:** Kliknij "Zapisz"
+
 - **Dodać nową książkę:** Kliknij przycisk "Dodaj książkę" i wypełnij formularz.
 
-~~- **Edytować książkę:** Wybierz książkę z listy i kliknij "Edytuj".~~
+- ~~**Edytować książkę:** Wybierz książkę z listy i kliknij "Edytuj".~~
 
 - **Usunąć książkę:** Wybierz książkę z listy i kliknij "Usuń".
 
@@ -56,7 +60,7 @@ Po uruchomieniu aplikacji, zostaniesz powitany przez główne okno aplikacji, gd
 ## Struktura projektu
 
 - **`src/`**: Zawiera kod źródłowy aplikacji.
-~~- **`include/`**: Zawiera pliki nagłówkowe.~~
+- ~~**`include/`**: Zawiera pliki nagłówkowe.~~
 - **`Makefile`**: Plik do automatyzacji procesu budowania.
 
 ## Autor
